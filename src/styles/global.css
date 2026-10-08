@@ -1,0 +1,244 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/space-grotesk';
+
+:root {
+  color-scheme: light dark;
+
+  --font-display: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-body: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* light */
+  --bg: #f6f0e6;
+  --surface: #fffdf9;
+  --surface-2: #efe7da;
+  --ink: #173a33;
+  --ink-2: #3d5a53;
+  --muted: #4f655f;
+  --line: #dcd2c2;
+  --tint: #d7e9e2; /* neutral mint, used for chips and code */
+  --accent: #b04a2a;
+  --accent-ink: #ffffff;
+  --accent-soft: #f6e1d8;
+  --band: #173a33;
+  --band-ink: #f6f0e6;
+  --band-muted: #b9cbc5;
+  --band-card: #21483f;
+
+  --radius: 20px;
+  --radius-sm: 12px;
+  --max: 1120px;
+  --gutter: clamp(16px, 4vw, 40px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1d1a;
+    --surface: #152824;
+    --surface-2: #1b322d;
+    --ink: #efe8dc;
+    --ink-2: #c9d3cf;
+    --muted: #9fb2ac;
+    --line: #2a443e;
+    --tint: #1f3a34;
+    --accent: #e58560;
+    --accent-ink: #1a0f0a;
+    --accent-soft: #3a2219;
+    --band: #0a1513;
+    --band-ink: #efe8dc;
+    --band-muted: #a5b8b2;
+    --band-card: #142824;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+  letter-spacing: -0.025em;
+}
+h2 {
+  font-size: clamp(2rem, 4.2vw, 3rem);
+}
+h3 {
+  font-size: 1.3rem;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(72px, 10vw, 128px);
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.section-head {
+  display: grid;
+  gap: 20px 64px;
+  grid-template-columns: 1fr;
+  align-items: end;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+.section-head .lede {
+  color: var(--ink-2);
+  max-width: 46ch;
+}
+@media (min-width: 860px) {
+  .section-head {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.dot {
+  color: var(--accent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.98rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.btn-ghost {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.btn-ghost:hover {
+  background: var(--surface);
+}
+
+/* The "Ad" label used on every mock ad. Part of what the site demonstrates. */
+.ad-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 12px;
+}

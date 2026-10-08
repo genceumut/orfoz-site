@@ -1,0 +1,88 @@
+---
+import Wave from './Wave.astro';
+
+const sides = [
+  {
+    who: 'For users',
+    text: 'The ad sits on top of the thing they opened the app to do. So they learn to look past it.',
+  },
+  {
+    who: 'For app developers',
+    text: 'A foreign rectangle in a screen they designed carefully, earning on views nobody wanted.',
+  },
+  {
+    who: 'For advertisers',
+    text: 'One creative stretched across every app, paid per impression, mostly ignored.',
+  },
+];
+---
+
+<section class="problem" aria-labelledby="problem-title">
+  <Wave />
+  <div class="band">
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">The problem</p>
+          <h2 id="problem-title">One banner, pasted everywhere<span class="dot">.</span></h2>
+        </div>
+        <p class="lede">
+          Most in-app ads are the same unit dropped into every app, whatever the app does. A planner, a recipe app
+          and a game all get the same rectangle.
+        </p>
+      </div>
+      <ul class="cards">
+        {
+          sides.map((s) => (
+            <li>
+              <h3>{s.who}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  <Wave flip />
+</section>
+
+<style>
+  .band {
+    background: var(--band);
+    color: var(--band-ink);
+  }
+  .band .lede {
+    color: var(--band-muted);
+  }
+  .band .eyebrow {
+    color: var(--band-muted);
+  }
+  .band .dot {
+    color: #e58560;
+  }
+  .cards {
+    display: grid;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 760px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+  .cards li {
+    background: var(--band-card);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .cards h3 {
+    margin-bottom: 10px;
+  }
+  .cards p {
+    color: var(--band-muted);
+    font-size: 0.98rem;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import { site } from '../config';
+---
+
+<footer class="footer">
+  <div class="wrap row">
+    <p><span class="wordmark">{site.name.toLowerCase()}</span> · {site.tagline.toLowerCase()} · pre-launch</p>
+    <p class="note">All brands and apps shown in examples on this page are invented.</p>
+    <p>© {site.year} {site.name}</p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: 40px 48px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .note {
+    color: var(--muted);
+  }
+</style>

@@ -1,0 +1,26 @@
+---
+// Decorative wave edge for dark bands, carried over from the reference design.
+interface Props {
+  flip?: boolean;
+}
+const { flip = false } = Astro.props;
+---
+
+<svg class:list={['wave', { flip }]} viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+  <path d="M0 40 C 240 0, 480 0, 720 28 S 1200 64, 1440 20 L 1440 64 L 0 64 Z" fill="currentColor"></path>
+</svg>
+
+<style>
+  .wave {
+    display: block;
+    width: 100%;
+    height: clamp(28px, 4vw, 64px);
+    color: var(--band);
+    margin-bottom: -1px;
+  }
+  .flip {
+    transform: rotate(180deg);
+    margin-bottom: 0;
+    margin-top: -1px;
+  }
+</style>

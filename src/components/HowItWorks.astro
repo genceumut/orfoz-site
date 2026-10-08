@@ -1,0 +1,240 @@
+---
+import { site } from '../config';
+---
+
+<section id="how" class="section" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">Three steps, one schema per app<span class="dot">.</span></h2>
+      </div>
+      <p class="lede">
+        A <strong>schema</strong> is a short, machine-readable description of what an ad is allowed to look like
+        inside one specific app. Everything else follows from it.
+      </p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <figure class="visual" aria-label="Example schema for a planner app">
+          <pre><code><span class="k">format</span>     time_block
+<span class="k">placement</span>  free slot, tomorrow
+<span class="k">duration</span>   60 min
+<span class="k">title</span>      ≤ 40 characters
+<span class="k">claims</span>     time, place, price
+<span class="k">label</span>      "Ad" — required
+<span class="k">actions</span>    add, dismiss</code></pre>
+        </figure>
+        <div class="text">
+          <p class="num">Step 1</p>
+          <h3>The app defines its schema</h3>
+          <p>
+            When an app joins, it describes its ad format once: the shape, where it can appear, length limits, and
+            which claims are allowed. This planner says an ad is a one-hour block in a free slot.
+          </p>
+        </div>
+      </li>
+
+      <li class="step">
+        <figure class="visual" aria-label="An advertiser entering their website address">
+          <div class="signup">
+            <p class="field-label">Your website</p>
+            <div class="field">https://ostra.example</div>
+            <div class="submit">Submit</div>
+          </div>
+        </figure>
+        <div class="text">
+          <p class="num">Step 2</p>
+          <h3>The advertiser submits their site</h3>
+          <p>
+            An advertiser signs up once and gives their website. That’s the brief. No banners to design, no separate
+            creative for every app.
+          </p>
+        </div>
+      </li>
+
+      <li class="step">
+        <figure class="visual" aria-label="Two generated drafts: one passes validation, one is rejected">
+          <ul class="drafts">
+            <li class="draft pass">
+              <span class="ad-label">Ad</span>
+              <span class="title">Lunchtime mobility class</span>
+              <span class="status">✓ Fits schema</span>
+            </li>
+            <li class="draft fail">
+              <span class="ad-label">Ad</span>
+              <span class="title">The city’s best class, guaranteed results</span>
+              <span class="status">✕ Claim not allowed · 42 chars</span>
+            </li>
+          </ul>
+        </figure>
+        <div class="text">
+          <p class="num">Step 3</p>
+          <h3>AI drafts ads, the schema checks them</h3>
+          <p>
+            An AI workflow reads the site and drafts ads for each app’s schema. Every draft is validated before it can
+            serve. Drafts that don’t fit never run.
+          </p>
+        </div>
+      </li>
+    </ol>
+
+    <p class="after">
+      <strong>Then:</strong> the ad is offered inside the app, in the app’s own format. The advertiser pays when
+      someone accepts it or acts on it, not when it’s shown.
+      <span class="fine">{`The schema shown is illustrative; ${site.name}’s format isn’t final.`}</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .steps {
+    display: grid;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  @media (min-width: 900px) {
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .visual {
+    margin: 0;
+    background: var(--surface-2);
+    min-height: 220px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .text {
+    padding: 24px 28px 30px;
+  }
+  .num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .text h3 {
+    margin-bottom: 10px;
+  }
+  .text p:last-child {
+    color: var(--ink-2);
+    font-size: 0.98rem;
+  }
+
+  pre {
+    margin: 0;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    font-size: 0.8rem;
+    line-height: 1.75;
+    overflow-x: auto;
+    color: var(--ink);
+  }
+  .k {
+    color: var(--accent);
+  }
+
+  .signup {
+    width: 100%;
+    max-width: 300px;
+  }
+  .field-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 12px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--ink-2);
+  }
+  .submit {
+    margin-top: 10px;
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-radius: 999px;
+    padding: 9px 18px;
+  }
+
+  .drafts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: grid;
+    gap: 10px;
+  }
+  .draft {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 10px;
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+  }
+  .draft .title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.3;
+  }
+  .draft .status {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+  }
+  .pass .status {
+    color: var(--ink);
+  }
+  .fail {
+    opacity: 0.85;
+  }
+  .fail .title {
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    color: var(--muted);
+  }
+  .fail .status {
+    color: var(--accent);
+  }
+
+  .after {
+    margin-top: 32px;
+    max-width: 72ch;
+    color: var(--ink-2);
+  }
+  .after strong {
+    color: var(--ink);
+  }
+  .fine {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>

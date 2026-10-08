@@ -1,0 +1,97 @@
+---
+import Wave from './Wave.astro';
+import { site } from '../config';
+
+const principles = [
+  {
+    title: 'Always labeled',
+    text: 'Every ad says it is an ad and names who paid for it. Before it’s accepted and after.',
+  },
+  {
+    title: 'Always user-initiated',
+    text: 'Ads are offered, never inserted. Nothing enters someone’s plan, list or ledger unless they choose it.',
+  },
+  {
+    title: 'Always removable in one tap',
+    text: 'One tap dismisses an offer or removes an accepted ad. No confirmation maze.',
+  },
+];
+---
+
+<section id="principles" aria-labelledby="principles-title">
+  <Wave />
+  <div class="band">
+    <div class="wrap section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Principles</p>
+          <h2 id="principles-title">Three rules that don’t bend<span class="dot">.</span></h2>
+        </div>
+        <p class="lede">
+          These are commitments, not settings. No app can turn them off, and no advertiser can pay to skip them. They
+          are built into how {site.name} serves every ad.
+        </p>
+      </div>
+      <ol class="cards">
+        {
+          principles.map((p) => (
+            <li>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+  <Wave flip />
+</section>
+
+<style>
+  .band {
+    background: var(--band);
+    color: var(--band-ink);
+  }
+  .band .lede,
+  .band .eyebrow {
+    color: var(--band-muted);
+  }
+  .band .dot {
+    color: #e58560;
+  }
+  .cards {
+    display: grid;
+    gap: 16px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: p;
+  }
+  @media (min-width: 760px) {
+    .cards {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+  .cards li {
+    counter-increment: p;
+    background: var(--band-card);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .cards li::before {
+    content: counter(p, decimal-leading-zero);
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #e58560;
+    margin-bottom: 18px;
+  }
+  .cards h3 {
+    font-size: 1.45rem;
+    margin-bottom: 10px;
+  }
+  .cards p {
+    color: var(--band-muted);
+  }
+</style>

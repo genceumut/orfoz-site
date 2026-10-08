@@ -1,0 +1,429 @@
+---
+// The planner example. All brands and apps here are invented.
+const sponsor = 'Ostra Studio';
+---
+
+<section id="example" class="section example" aria-labelledby="example-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">The example</p>
+        <h2 id="example-title">In a planner, the ad is a block in the plan<span class="dot">.</span></h2>
+      </div>
+      <p class="lede">
+        Not a banner above tomorrow’s schedule. A one-hour block inside it, sitting in a free slot, that the user can
+        add or dismiss. Try both.
+      </p>
+    </div>
+
+    <div class="layout">
+      <figure class="phone" aria-labelledby="planner-caption">
+        <div class="app">
+          <div class="appbar">
+            <p class="app-title">Tomorrow</p>
+            <p class="app-sub">Thursday · 5 blocks</p>
+          </div>
+
+          <ol class="day">
+            <li class="row" style="--h: 1">
+              <span class="time">08:00</span>
+              <div class="block own"><span class="b-title">Gym</span><span class="b-time">08:00–09:00</span></div>
+            </li>
+            <li class="row" style="--h: 2">
+              <span class="time">09:00</span>
+              <div class="block own"><span class="b-title">Deep work: Q3 report</span><span class="b-time">09:00–11:00</span></div>
+            </li>
+            <li class="row" style="--h: 1">
+              <span class="time">11:00</span>
+              <div class="block own"><span class="b-title">Team sync</span><span class="b-time">11:00–12:00</span></div>
+            </li>
+
+            <li class="row" style="--h: 1">
+              <span class="time">12:00</span>
+              <div class="block ad" data-ad data-state="offered">
+                <div class="ad-top">
+                  <span class="ad-label">Ad</span>
+                  <span class="sponsor">Sponsored by {sponsor}</span>
+                  <button type="button" class="dismiss" data-dismiss aria-label={`Dismiss ad from ${sponsor}`}>
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3.5 3.5l9 9m0-9l-9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+                  </button>
+                </div>
+                <p class="b-title">Lunchtime mobility class</p>
+                <p class="b-meta">12:00–13:00 · Online · First class free</p>
+                <button type="button" class="add" data-add>+ Add to plan</button>
+                <p class="added-note">In your plan. Tap ✕ to remove.</p>
+              </div>
+              <div class="block free" data-free hidden>
+                <span class="b-title">Free</span>
+                <span class="b-time">12:00–13:00</span>
+                <button type="button" class="undo" data-undo>Undo</button>
+              </div>
+            </li>
+
+            <li class="row" style="--h: 2">
+              <span class="time">13:00</span>
+              <div class="block own"><span class="b-title">Client calls</span><span class="b-time">13:00–15:00</span></div>
+            </li>
+            <li class="row" style="--h: 1">
+              <span class="time">15:00</span>
+              <div class="block own"><span class="b-title">Groceries</span><span class="b-time">15:00–16:00</span></div>
+            </li>
+          </ol>
+          <p class="visually-hidden" aria-live="polite" data-status></p>
+        </div>
+        <figcaption id="planner-caption">
+          A mock planner app showing tomorrow, with an ad offered as a one-hour block. Ostra Studio is an invented
+          brand.
+        </figcaption>
+      </figure>
+
+      <ol class="notes">
+        <li>
+          <h3>Labeled</h3>
+          <p>“Ad” and the sponsor’s name stay on the block, before and after it’s added.</p>
+        </li>
+        <li>
+          <h3>Offered, not inserted</h3>
+          <p>It appears in a free hour as a suggestion. It joins the plan only if the user taps Add.</p>
+        </li>
+        <li>
+          <h3>One tap to dismiss</h3>
+          <p>The ✕ removes it, whether it was just offered or already added.</p>
+        </li>
+        <li>
+          <h3>Shaped by the schema</h3>
+          <p>One hour, in a free slot, a short title, only the claims this app allows.</p>
+        </li>
+        <li>
+          <h3>Paid on acceptance</h3>
+          <p>The advertiser pays when it’s added to someone’s plan, not when it’s seen.</p>
+        </li>
+      </ol>
+    </div>
+
+    <h3 class="others-title">The same idea, in other apps</h3>
+    <ul class="others">
+      <li>
+        <p class="context">Home-inventory app · rewarded unlock</p>
+        <div class="mini" aria-label="Mock ad: a rewarded unlock">
+          <div class="ad-top">
+            <span class="ad-label">Ad</span>
+            <span class="sponsor">Sponsored by Cubby &amp; Co.</span>
+            <span class="x" aria-hidden="true">✕</span>
+          </div>
+          <p class="b-title">Unlock a fourth storage room, free</p>
+          <p class="b-meta">Cubby &amp; Co. makes shelf and drawer organizers.</p>
+          <span class="fake-btn">Unlock</span>
+        </div>
+      </li>
+      <li>
+        <p class="context">Shared-expense app · suggested recurring expense</p>
+        <div class="mini" aria-label="Mock ad: a suggested recurring expense">
+          <div class="ad-top">
+            <span class="ad-label">Ad</span>
+            <span class="sponsor">Sponsored by Ripple Fiber</span>
+            <span class="x" aria-hidden="true">✕</span>
+          </div>
+          <p class="b-title">Home internet · €30 / month</p>
+          <p class="b-meta">Split 3 ways: €10 each, repeats monthly.</p>
+          <span class="fake-btn">Add expense</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.phone').forEach((phone) => {
+    const ad = phone.querySelector<HTMLElement>('[data-ad]');
+    const free = phone.querySelector<HTMLElement>('[data-free]');
+    const status = phone.querySelector<HTMLElement>('[data-status]');
+    if (!ad || !free || !status) return;
+
+    const add = ad.querySelector<HTMLButtonElement>('[data-add]');
+    const dismiss = ad.querySelector<HTMLButtonElement>('[data-dismiss]');
+    const undo = free.querySelector<HTMLButtonElement>('[data-undo]');
+
+    add?.addEventListener('click', () => {
+      ad.dataset.state = 'added';
+      status.textContent = 'Ad added to your plan for 12:00 to 13:00.';
+      dismiss?.focus();
+    });
+
+    dismiss?.addEventListener('click', () => {
+      ad.hidden = true;
+      free.hidden = false;
+      status.textContent = 'Ad dismissed. 12:00 to 13:00 is free.';
+      undo?.focus();
+    });
+
+    undo?.addEventListener('click', () => {
+      ad.dataset.state = 'offered';
+      ad.hidden = false;
+      free.hidden = true;
+      status.textContent = 'Ad offered again.';
+      add?.focus();
+    });
+  });
+</script>
+
+<style>
+  .example {
+    background: var(--surface-2);
+  }
+  .layout {
+    display: grid;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .layout {
+      grid-template-columns: minmax(0, 400px) 1fr;
+      gap: 80px;
+    }
+  }
+
+  /* Phone mock */
+  .phone {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+    justify-self: center;
+  }
+  .app {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 32px;
+    padding: 22px 18px 18px;
+    box-shadow: 0 1px 0 var(--line), 0 24px 48px -24px rgb(23 58 51 / 0.25);
+  }
+  figcaption {
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .appbar {
+    padding: 0 6px 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .app-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.1;
+  }
+  .app-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .day {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .time {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding-top: 10px;
+  }
+  .block {
+    min-height: calc(var(--h) * 46px);
+    border-radius: 12px;
+    padding: 9px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .block[hidden] {
+    display: none;
+  }
+  .own {
+    background: var(--tint);
+  }
+  .b-title {
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+  .b-time,
+  .b-meta {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+  }
+
+  .ad {
+    background: var(--accent-soft);
+    border: 2px dashed var(--accent);
+    padding: 10px 12px 12px;
+    gap: 4px;
+  }
+  .ad[data-state='added'] {
+    border-style: solid;
+  }
+  .ad-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .sponsor {
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--ink-2);
+    margin-right: auto;
+  }
+  .dismiss {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin: -6px -6px -6px 0;
+    border-radius: 999px;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .dismiss:hover {
+    background: color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+  .add,
+  .undo {
+    align-self: flex-start;
+    margin-top: 6px;
+    font: inherit;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+    border: 0;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .undo {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: 4px 12px;
+    font-size: 0.8rem;
+  }
+  .added-note {
+    display: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .ad[data-state='added'] .add {
+    display: none;
+  }
+  .ad[data-state='added'] .added-note {
+    display: block;
+  }
+  .free {
+    border: 1.5px dashed var(--line);
+    color: var(--muted);
+  }
+
+  /* Annotations */
+  .notes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: note;
+    display: grid;
+    gap: 4px;
+  }
+  .notes li {
+    counter-increment: note;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    column-gap: 12px;
+    padding-block: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .notes li:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .notes li::before {
+    content: counter(note, decimal-leading-zero);
+    grid-row: span 2;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    padding-top: 4px;
+  }
+  .notes h3 {
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+  }
+  .notes p {
+    color: var(--ink-2);
+  }
+
+  /* Other formats */
+  .others-title {
+    margin-top: clamp(64px, 8vw, 96px);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+  }
+  .others {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 20px;
+  }
+  @media (min-width: 760px) {
+    .others {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .others > li {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .context {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .mini {
+    background: var(--accent-soft);
+    border: 2px dashed var(--accent);
+    border-radius: 12px;
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .x {
+    font-size: 0.85rem;
+  }
+  .fake-btn {
+    align-self: flex-start;
+    margin-top: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-radius: 999px;
+    padding: 6px 14px;
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+</style>

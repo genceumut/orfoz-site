@@ -1,0 +1,83 @@
+---
+const tracks = [
+  {
+    id: 'developers',
+    title: 'For app developers',
+    points: [
+      'Ads that look and behave like your app, because you defined the format.',
+      'You set the rules: shape, placement, length, and which claims are allowed.',
+      'Nothing serves unless it has passed your schema.',
+      'Earn on what users accept, not on what they scroll past.',
+    ],
+  },
+  {
+    id: 'advertisers',
+    title: 'For advertisers',
+    points: [
+      'Sign up once and submit your website. That is the whole brief.',
+      'Ads drafted for each app’s format, not one creative stretched across all of them.',
+      'Pay for outcomes: placements accepted and actions taken, not impressions.',
+      'Show up when your offer fits what the person is already doing.',
+    ],
+  },
+];
+---
+
+<section class="section" aria-label="Who it's for">
+  <div class="wrap tracks">
+    {
+      tracks.map((t) => (
+        <article class="track" aria-labelledby={`track-${t.id}`}>
+          <h2 id={`track-${t.id}`}>{t.title}</h2>
+          <ul>
+            {t.points.map((p) => (
+              <li>{p}</li>
+            ))}
+          </ul>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .tracks {
+    display: grid;
+    gap: 20px;
+  }
+  @media (min-width: 860px) {
+    .tracks {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .track {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(28px, 4vw, 40px);
+    background: var(--surface);
+  }
+  h2 {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    margin-bottom: 20px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    position: relative;
+    padding: 14px 0 14px 28px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-2);
+  }
+  li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 24px;
+    width: 10px;
+    height: 2px;
+    background: var(--accent);
+  }
+</style>

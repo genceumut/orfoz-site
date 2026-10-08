@@ -1,0 +1,67 @@
+---
+import { site, mailto } from '../config';
+---
+
+<header class="header">
+  <div class="wrap bar">
+    <a class="wordmark" href="/" aria-label={`${site.name} home`}>{site.name.toLowerCase()}</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#example">Example</a></li>
+        <li><a href="#principles">Principles</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary cta" href={mailto(`${site.name} early access`)}>Early access</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.2) blur(10px);
+    -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-height: 72px;
+  }
+  .wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav a {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  nav a:hover {
+    color: var(--accent);
+  }
+  .cta {
+    min-height: 40px;
+    padding: 0 18px;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 720px) {
+    nav {
+      display: none;
+    }
+  }
+</style>

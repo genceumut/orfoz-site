@@ -1,0 +1,145 @@
+---
+import { site, mailto } from '../config';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap grid">
+    <div class="copy">
+      <p class="chip">Pre-launch · in development</p>
+      <h1 id="hero-title">Ads shaped like<br /> <em>the app they’re in.</em></h1>
+      <p class="lede">
+        {site.name} is an ad engine that turns an advertiser’s website into ads built for each app’s own format.
+        It’s for mobile app developers who want ads that fit their product, and advertisers who want to pay for
+        what people actually choose.
+      </p>
+      <p class="example">In a planner app, the ad is a one-hour block you can add to tomorrow.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#example">See the planner example</a>
+        <a class="btn btn-ghost" href={mailto(`${site.name} early access`)}>Request early access</a>
+      </div>
+    </div>
+
+    <aside class="spec" aria-label={`${site.name} at a glance`}>
+      <p class="spec-title">At a glance</p>
+      <dl>
+        <div>
+          <dt>Ad format</dt>
+          <dd>Defined by each app, in a schema</dd>
+        </div>
+        <div>
+          <dt>Ad content</dt>
+          <dd>Generated from the advertiser’s website</dd>
+        </div>
+        <div>
+          <dt>Before serving</dt>
+          <dd>Every ad is validated against the app’s schema</dd>
+        </div>
+        <div>
+          <dt>User control</dt>
+          <dd>Labeled, offered not inserted, one-tap dismiss</dd>
+        </div>
+        <div>
+          <dt>Pricing</dt>
+          <dd>On outcomes, not impressions</dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(48px, 8vw, 112px) clamp(64px, 9vw, 120px);
+  }
+  .grid {
+    display: grid;
+    gap: 56px;
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .grid {
+      grid-template-columns: 1.35fr 1fr;
+      gap: 72px;
+    }
+  }
+  .chip {
+    display: inline-block;
+    background: var(--tint);
+    color: var(--ink);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+  }
+  .lede {
+    margin-top: 28px;
+    font-size: 1.15rem;
+    color: var(--ink-2);
+    max-width: 54ch;
+  }
+  .example {
+    margin-top: 20px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
+    font-weight: 500;
+    max-width: 54ch;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .spec {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .spec-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  dl {
+    margin: 0;
+  }
+  dl div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 16px;
+    padding-block: 14px;
+    border-top: 1px solid var(--line);
+  }
+  dl div:first-child {
+    border-top: 0;
+  }
+  dt {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+  dd {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  @media (max-width: 420px) {
+    dl div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

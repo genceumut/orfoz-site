@@ -1,0 +1,57 @@
+---
+import { site, mailto } from '../config';
+---
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="card">
+      <div>
+        <h2 id="contact-title">Early access</h2>
+        <p>
+          {site.name} isn’t live yet. We’re talking to app developers and advertisers before launch. If you’d define a
+          schema for your app, or want your site turned into ads that fit, write to us.
+        </p>
+      </div>
+      <div class="action">
+        <a class="btn mail" href={mailto(`${site.name} early access`)}>Email {site.contactEmail}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .card {
+    background: var(--accent);
+    color: var(--accent-ink);
+    border-radius: 28px;
+    padding: clamp(32px, 6vw, 64px);
+    display: grid;
+    gap: 28px;
+    align-items: center;
+  }
+  @media (min-width: 860px) {
+    .card {
+      grid-template-columns: 1.4fr 1fr;
+      gap: 48px;
+    }
+    .action {
+      justify-self: end;
+    }
+  }
+  h2 {
+    margin-bottom: 14px;
+  }
+  p {
+    max-width: 52ch;
+    opacity: 0.95;
+  }
+  .mail {
+    background: var(--ink);
+    color: var(--bg);
+    word-break: break-all;
+    text-align: center;
+  }
+  .mail:focus-visible {
+    outline-color: var(--accent-ink);
+  }
+</style>
