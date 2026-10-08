@@ -20,10 +20,10 @@ import { site } from '../config';
         <figure class="visual" aria-label="Example schema for a planner app">
           <pre><code><span class="k">format</span>     time_block
 <span class="k">placement</span>  free slot, tomorrow
-<span class="k">duration</span>   60 min
-<span class="k">title</span>      ≤ 40 characters
-<span class="k">claims</span>     time, place, price
-<span class="k">label</span>      "Ad" — required
+<span class="k">duration</span>   30 / 60 / 90 min
+<span class="k">title</span>      ≤ 32 characters
+<span class="k">claims</span>     no superlatives, no urgency, no guarantees
+<span class="k">label</span>      "Reklam" — required
 <span class="k">actions</span>    add, dismiss</code></pre>
         </figure>
         <div class="text">
@@ -83,7 +83,7 @@ import { site } from '../config';
     <p class="after">
       <strong>Then:</strong> the ad is offered inside the app, in the app’s own format. The advertiser pays when
       someone accepts it or acts on it, not when it’s shown.
-      <span class="fine">{`The schema shown is illustrative; ${site.name}’s format isn’t final.`}</span>
+      <span class="fine">{`This is the current schema for our first app; ${site.name}’s format is still evolving.`}</span>
     </p>
   </div>
 </section>
