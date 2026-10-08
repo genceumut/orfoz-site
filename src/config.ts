@@ -5,8 +5,7 @@ export const site = {
   tagline: 'An ad engine for mobile apps',
   description:
     'Orfoz is a pre-launch ad engine for mobile apps. Each app defines what an ad looks like inside it, and ads are generated to fit that definition.',
-  // TODO: confirm this inbox exists before launch.
-  contactEmail: 'hello@orfoz.studio',
+  contactEmail: 'david@orfoz.co',
   year: 2026,
 } as const;
 
