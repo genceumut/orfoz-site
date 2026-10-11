@@ -3,8 +3,8 @@
 
 export type AppStatus = 'In development' | 'Idea';
 
-// Featured apps name the live mock to show beside them. Each key maps to a
-// component in src/components/studio/mocks/.
+// Apps can name a live mock to show beside them. Each key maps to a component in
+// src/components/studio/mocks/.
 export type AppMock = 'yarun' | 'cay';
 
 export interface StudioApp {
@@ -18,9 +18,9 @@ export interface StudioApp {
   platform: string;
   status: AppStatus;
   price: string;
-  /** Featured apps only: a few plain points about how the app works. */
+  /** Optional: a few plain points about how the app works. */
   points?: string[];
-  /** Featured apps only: which live mock to render. */
+  /** Optional: which live mock to render beside the app. */
   mock?: AppMock;
 }
 
@@ -55,29 +55,5 @@ export const apps: StudioApp[] = [
       'Fully personal: nothing is shared with anyone. Syncs through your iCloud.',
     ],
     mock: 'cay',
-  },
-  {
-    id: 'nereye-koydum',
-    name: 'Nereye Koydum?',
-    description: 'Remember where you stored the things you rarely use.',
-    platform: '[PLATFORM]',
-    status: 'Idea',
-    price: '[PRICE]',
-  },
-  {
-    id: 'roommate',
-    name: '[Roommate app]',
-    description: 'A shared-house app with who’s home, shared expenses and chores in one place.',
-    platform: '[PLATFORM]',
-    status: 'Idea',
-    price: '[PRICE]',
-  },
-  {
-    id: 'spearfishing',
-    name: '[Spearfishing app]',
-    description: 'A logbook for spearfishers to archive dives and catches.',
-    platform: '[PLATFORM]',
-    status: 'Idea',
-    price: '[PRICE]',
   },
 ];
