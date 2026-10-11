@@ -1,6 +1,6 @@
 import { mailtoLink } from './mailto';
 
-// Brand config for the private /diegetic section (the ad-engine site). "Diegetic" may
+// Brand config for the unlisted /diegetic section (the ad-engine site). "Diegetic" may
 // change; rename it here and nowhere else. Components read these values.
 export const brand = {
   name: 'Diegetic',

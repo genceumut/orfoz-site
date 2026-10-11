@@ -11,7 +11,6 @@ npm-debug.log*
 # environment — never commit secrets
 .env
 .env.*
-!.env.example
 .dev.vars*
 
 # wrangler local state
