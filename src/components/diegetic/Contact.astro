@@ -1,0 +1,11 @@
+---
+import ContactCard from '../ContactCard.astro';
+import { brand, mailto } from '../../config/diegetic';
+---
+
+<ContactCard heading="Early access" href={mailto(`${brand.name} early access`)} label={`Email ${brand.contactEmail}`}>
+  <p>
+    {brand.name} isn’t live yet. We’re talking to app developers and advertisers before launch. If you’d define a
+    schema for your app, or want your site turned into ads that fit, write to us.
+  </p>
+</ContactCard>

@@ -1,26 +1,33 @@
 ---
+// The studio site. Must not link to /diegetic or mention it.
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Problem from '../components/Problem.astro';
-import HowItWorks from '../components/HowItWorks.astro';
-import PlannerExample from '../components/PlannerExample.astro';
-import Tracks from '../components/Tracks.astro';
-import Principles from '../components/Principles.astro';
-import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import Hero from '../components/studio/Hero.astro';
+import Why from '../components/studio/Why.astro';
+import HowWeBuild from '../components/studio/HowWeBuild.astro';
+import Apps from '../components/studio/Apps.astro';
+import Contact from '../components/studio/Contact.astro';
+import { brand } from '../config/studio';
 ---
 
-<Base>
-  <Header />
+<Base title={brand.name} description={brand.description} siteName={brand.name} url={brand.url}>
+  <Header
+    name={brand.name}
+    home="/"
+    nav={[
+      { href: '#why', label: 'Why' },
+      { href: '#how', label: 'How we build' },
+      { href: '#apps', label: 'Apps' },
+    ]}
+    cta={{ href: '#contact', label: 'Contact' }}
+  />
   <main id="main">
     <Hero />
-    <Problem />
-    <HowItWorks />
-    <PlannerExample />
-    <Tracks />
-    <Principles />
+    <Why />
+    <HowWeBuild />
+    <Apps />
     <Contact />
   </main>
-  <Footer />
+  <Footer name={brand.name} line={brand.tagline} year={brand.year} />
 </Base>

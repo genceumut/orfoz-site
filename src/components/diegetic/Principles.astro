@@ -1,0 +1,48 @@
+---
+import Band from '../Band.astro';
+import { brand } from '../../config/diegetic';
+
+const principles = [
+  {
+    title: 'Always labeled',
+    text: 'Every ad says it is an ad and names who paid for it. Before it’s accepted and after.',
+  },
+  {
+    title: 'Always user-initiated',
+    text: 'Ads are offered, never inserted. Nothing enters someone’s plan, list or ledger unless they choose it.',
+  },
+  {
+    title: 'Always removable in one tap',
+    text: 'One tap dismisses an offer or removes an accepted ad. No confirmation maze.',
+  },
+];
+---
+
+<Band id="principles" labelledby="principles-title">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">Principles</p>
+      <h2 id="principles-title">Three rules that don’t bend<span class="dot">.</span></h2>
+    </div>
+    <p class="lede">
+      These are commitments, not settings. No app can turn them off, and no advertiser can pay to skip them. They are
+      built into how {brand.name} serves every ad.
+    </p>
+  </div>
+  <ol class="card-grid numbered">
+    {
+      principles.map((p) => (
+        <li class="band-card">
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Band>
+
+<style>
+  .band-card h3 {
+    font-size: 1.45rem;
+  }
+</style>

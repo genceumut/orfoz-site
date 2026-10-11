@@ -1,0 +1,33 @@
+---
+import SpecCard from '../SpecCard.astro';
+import { brand, mailto } from '../../config/diegetic';
+
+const glance = [
+  { term: 'Ad format', detail: 'Defined by each app, in a schema' },
+  { term: 'Ad content', detail: 'Generated from the advertiser’s website' },
+  { term: 'Before serving', detail: 'Every ad is validated against the app’s schema' },
+  { term: 'User control', detail: 'Labeled, offered not inserted, one-tap dismiss' },
+  { term: 'Pricing', detail: 'On outcomes, not impressions' },
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="chip">Pre-launch · in development</p>
+      <h1 id="hero-title">Ads shaped like<br /> <em>the app they’re in.</em></h1>
+      <p class="hero-lede">
+        {brand.name} is an ad engine that turns an advertiser’s website into ads built for each app’s own format.
+        It’s for mobile app developers who want ads that fit their product, and advertisers who want to pay for
+        what people actually choose.
+      </p>
+      <p class="hero-callout">In a planner app, the ad is a one-hour block you can add to tomorrow.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#example">See the planner example</a>
+        <a class="btn btn-ghost" href={mailto(`${brand.name} early access`)}>Request early access</a>
+      </div>
+    </div>
+
+    <SpecCard label={`${brand.name} at a glance`} items={glance} />
+  </div>
+</section>

@@ -1,0 +1,21 @@
+---
+// A dark band section with wavy edges. Content goes in the slot.
+import Wave from './Wave.astro';
+
+interface Props {
+  id?: string;
+  labelledby: string;
+}
+
+const { id, labelledby } = Astro.props;
+---
+
+<section id={id} aria-labelledby={labelledby}>
+  <Wave />
+  <div class="band">
+    <div class="wrap section">
+      <slot />
+    </div>
+  </div>
+  <Wave flip />
+</section>

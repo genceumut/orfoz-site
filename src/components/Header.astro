@@ -1,18 +1,34 @@
 ---
-import { site, mailto } from '../config';
+interface Link {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  name: string;
+  home: string;
+  nav: Link[];
+  cta: Link;
+}
+
+const { name, home, nav, cta } = Astro.props;
 ---
 
 <header class="header">
   <div class="wrap bar">
-    <a class="wordmark" href="/" aria-label={`${site.name} home`}>{site.name.toLowerCase()}</a>
+    <a class="wordmark" href={home} aria-label={`${name} home`}>{name.toLowerCase()}</a>
     <nav aria-label="Primary">
       <ul>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#example">Example</a></li>
-        <li><a href="#principles">Principles</a></li>
+        {
+          nav.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
-    <a class="btn btn-primary cta" href={mailto(`${site.name} early access`)}>Early access</a>
+    <a class="btn btn-primary cta" href={cta.href}>{cta.label}</a>
   </div>
 </header>
 

@@ -1,0 +1,8 @@
+---
+import ContactCard from '../ContactCard.astro';
+import { brand, mailto } from '../../config/studio';
+---
+
+<ContactCard heading="Say merhaba." href={mailto(`Hello, ${brand.name}`)} label={`Email ${brand.contactEmail}`}>
+  <p>Questions, feedback, or a small everyday annoyance you’d like an app for: write to us.</p>
+</ContactCard>

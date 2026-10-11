@@ -1,0 +1,252 @@
+---
+// Live mock of Çay: one person's card. Each tulip glass is a favor; full glasses are
+// still owed, empty ones were paid back. Press and hold a full glass to drain it.
+// Names and counts are sample data.
+interface Props {
+  appName: string;
+}
+
+const { appName } = Astro.props;
+
+const person = 'Elif';
+// Visible glasses, oldest first. true = still owed (full).
+const glasses = [false, false, true, true, true, true];
+const hidden = 3; // more owed glasses than fit in the row
+const owed = glasses.filter(Boolean).length + hidden;
+
+// Tulip-shaped tea glass (ince belli), drawn in a 24×36 box.
+const glassPath =
+  'M4 2H20C20.4 9 18.6 14.5 15.6 19.5C17.5 22.5 18 26.5 18 30H6C6 26.5 6.5 22.5 8.4 19.5C5.4 14.5 3.6 9 4 2Z';
+---
+
+<figure class="cay" aria-labelledby="cay-caption" data-cay data-person={person} data-owed={owed}>
+  <div class="card">
+    <div class="who">
+      <span class="avatar" aria-hidden="true">{person[0]}</span>
+      <div>
+        <p class="name">{person}</p>
+        <p class="count"><span data-count>{owed}</span> çay owed</p>
+      </div>
+    </div>
+
+    <ul class="glasses" aria-label={`Favors with ${person}`}>
+      {
+        glasses.map((full, i) => (
+          <li>
+            {full ? (
+              <button type="button" class="glass full" data-glass aria-label={`Owed glass. Press and hold to pay it back.`}>
+                <svg viewBox="0 0 24 36" width="32" height="48" aria-hidden="true">
+                  <defs>
+                    <clipPath id={`cay-glass-${i}`}>
+                      <path d={glassPath} />
+                    </clipPath>
+                  </defs>
+                  <path d={glassPath} class="glass-bg" />
+                  <g clip-path={`url(#cay-glass-${i})`}>
+                    <rect class="tea" x="0" y="5.5" width="24" height="24.5" />
+                  </g>
+                  <path d={glassPath} class="glass-line" />
+                  <ellipse cx="12" cy="33" rx="10" ry="1.8" class="saucer" />
+                </svg>
+              </button>
+            ) : (
+              <span class="glass" role="img" aria-label="Paid back">
+                <svg viewBox="0 0 24 36" width="32" height="48" aria-hidden="true">
+                  <path d={glassPath} class="glass-bg" />
+                  <path d={glassPath} class="glass-line" />
+                  <ellipse cx="12" cy="33" rx="10" ry="1.8" class="saucer" />
+                </svg>
+              </span>
+            )}
+          </li>
+        ))
+      }
+      <li class="more"><span aria-hidden="true">+{hidden}</span><span class="visually-hidden">{hidden} more owed</span></li>
+    </ul>
+
+    <p class="hint">Press and hold a full glass to pay one back.</p>
+    <p class="visually-hidden" aria-live="polite" data-status></p>
+  </div>
+  <figcaption id="cay-caption">A mock of one person’s card in {appName}. Try paying one back.</figcaption>
+</figure>
+
+<script>
+  const HOLD_MS = 800;
+
+  document.querySelectorAll<HTMLElement>('[data-cay]').forEach((root) => {
+    const countEl = root.querySelector<HTMLElement>('[data-count]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const person = root.dataset.person ?? '';
+    let owed = Number(root.dataset.owed ?? 0);
+
+    root.querySelectorAll<HTMLButtonElement>('[data-glass]').forEach((glass) => {
+      let timer: number | undefined;
+
+      const start = () => {
+        if (glass.disabled || timer !== undefined) return;
+        glass.classList.add('draining');
+        timer = window.setTimeout(finish, HOLD_MS);
+      };
+
+      const cancel = () => {
+        if (timer === undefined) return;
+        window.clearTimeout(timer);
+        timer = undefined;
+        glass.classList.remove('draining');
+      };
+
+      const finish = () => {
+        timer = undefined;
+        glass.classList.remove('draining');
+        glass.classList.replace('full', 'drained');
+        owed -= 1;
+        if (countEl) countEl.textContent = String(owed);
+        if (status) status.textContent = `Paid back one çay to ${person}. ${owed} owed.`;
+        glass.setAttribute('aria-label', 'Paid back');
+        const next = root.querySelector<HTMLButtonElement>('[data-glass].full');
+        glass.disabled = true;
+        next?.focus();
+      };
+
+      glass.addEventListener('pointerdown', (e) => {
+        glass.setPointerCapture(e.pointerId);
+        start();
+      });
+      glass.addEventListener('pointerup', cancel);
+      glass.addEventListener('pointercancel', cancel);
+      glass.addEventListener('lostpointercapture', cancel);
+      glass.addEventListener('contextmenu', (e) => e.preventDefault());
+
+      glass.addEventListener('keydown', (e) => {
+        if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+          e.preventDefault();
+          start();
+        }
+      });
+      glass.addEventListener('keyup', (e) => {
+        if (e.key === ' ' || e.key === 'Enter') cancel();
+      });
+      glass.addEventListener('blur', cancel);
+    });
+  });
+</script>
+
+<style>
+  .cay {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+    justify-self: center;
+  }
+  .card {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 1px 0 var(--line), 0 24px 48px -24px rgb(23 58 51 / 0.25);
+  }
+  figcaption {
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: var(--tint);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.1;
+  }
+  .count {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .glasses {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .glass {
+    display: grid;
+    place-items: center;
+    padding: 4px 3px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--ink);
+  }
+  button.glass {
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+  button.glass:hover {
+    background: color-mix(in srgb, var(--ink) 8%, transparent);
+  }
+  button.glass:disabled {
+    cursor: default;
+    background: transparent;
+  }
+  .glass-bg {
+    fill: var(--surface);
+  }
+  .glass-line {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+  }
+  .saucer {
+    fill: var(--muted);
+  }
+  .tea {
+    fill: var(--accent);
+    transform-box: fill-box;
+    transform-origin: bottom;
+    transition: transform 0.25s ease-out;
+  }
+  .draining .tea {
+    transform: scaleY(0);
+    transition: transform 0.8s linear;
+  }
+  .drained .tea {
+    transform: scaleY(0);
+  }
+  .more {
+    align-self: center;
+    margin-left: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-2);
+  }
+  .hint {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+</style>

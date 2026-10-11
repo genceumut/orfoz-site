@@ -1,0 +1,222 @@
+---
+// Live mock of Yarun: tomorrow's plan as an ordered list. Pinned blocks hold a fixed
+// time; untimed blocks flow, in order, into the gaps between them. Below is the
+// user's library of reusable blocks. Copied from the Diegetic planner mock (which
+// stays as it is), without any sponsored block. All plan content is sample data.
+interface Props {
+  appName: string;
+}
+
+const { appName } = Astro.props;
+
+type Row =
+  | { kind: 'pinned'; start: string; end: string; title: string; h: number }
+  | { kind: 'flow'; start: string; title: string; duration: string; h: number }
+  | { kind: 'free'; start: string; duration: string };
+
+const plan: Row[] = [
+  { kind: 'pinned', start: '08:30', end: '09:30', title: 'Dentist', h: 1 },
+  { kind: 'flow', start: '09:30', title: 'Ironing', duration: '1h', h: 1 },
+  { kind: 'flow', start: '10:30', title: 'Closet cleanup', duration: '2h', h: 2 },
+  { kind: 'free', start: '12:30', duration: '30m' },
+  { kind: 'pinned', start: '13:00', end: '14:00', title: 'Lunch with Deniz', h: 1 },
+  { kind: 'flow', start: '14:00', title: 'Groceries', duration: '45m', h: 1 },
+];
+
+const library = [
+  { title: 'Ironing', duration: '1h' },
+  { title: 'Closet cleanup', duration: '2h' },
+  { title: 'Groceries', duration: '45m' },
+  { title: 'Call home', duration: '30m' },
+  { title: 'Run', duration: '1h' },
+];
+---
+
+<figure class="phone" aria-labelledby="yarun-caption">
+  <div class="app">
+    <div class="appbar">
+      <p class="app-title">Tomorrow</p>
+      <p class="app-sub">Thursday · {plan.filter((r) => r.kind !== 'free').length} blocks</p>
+    </div>
+
+    <ol class="day">
+      {
+        plan.map((r) => (
+          <li class="row" style={`--h: ${r.kind === 'free' ? 0.5 : r.h}`}>
+            <span class:list={['time', { flow: r.kind !== 'pinned' }]}>{r.start}</span>
+            {r.kind === 'pinned' && (
+              <div class="block pinned">
+                <span class="b-title">
+                  {r.title}
+                  <svg class="lock" viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+                    <rect x="3" y="7" width="10" height="7" rx="1.5" fill="currentColor" />
+                    <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6" />
+                  </svg>
+                </span>
+                <span class="b-time">
+                  {r.start}–{r.end} · <span>pinned</span>
+                </span>
+              </div>
+            )}
+            {r.kind === 'flow' && (
+              <div class="block flowing">
+                <span class="b-title">{r.title}</span>
+                <span class="b-time">{r.duration}</span>
+              </div>
+            )}
+            {r.kind === 'free' && (
+              <div class="block free">
+                <span class="b-time">Free · {r.duration}</span>
+              </div>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="library">
+      <p class="lib-title">Your blocks</p>
+      <ul>
+        {
+          library.map((b) => (
+            <li>
+              {b.title} · {b.duration}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+  <figcaption id="yarun-caption">
+    A mock of {appName}. Pinned blocks keep their time; the others flow, in order, into the gaps between them.
+  </figcaption>
+</figure>
+
+<style>
+  .phone {
+    margin: 0;
+    width: 100%;
+    max-width: 400px;
+    justify-self: center;
+  }
+  .app {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 32px;
+    padding: 22px 18px 18px;
+    box-shadow: 0 1px 0 var(--line), 0 24px 48px -24px rgb(23 58 51 / 0.25);
+  }
+  figcaption {
+    margin-top: 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  .appbar {
+    padding: 0 6px 16px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .app-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.1;
+  }
+  .app-sub {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .day {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
+  .time {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink);
+    padding-top: 10px;
+  }
+  .time.flow {
+    color: var(--muted);
+  }
+  .block {
+    min-height: calc(var(--h) * 46px);
+    border-radius: 12px;
+    padding: 9px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .pinned {
+    background: var(--tint);
+  }
+  .flowing {
+    background: var(--surface);
+    border: 1px solid var(--line);
+  }
+  .free {
+    border: 1.5px dashed var(--line);
+    justify-content: center;
+    padding-block: 4px;
+  }
+  .b-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    line-height: 1.3;
+  }
+  .lock {
+    color: var(--accent);
+    flex: none;
+  }
+  .b-time {
+    font-size: 0.78rem;
+    color: var(--ink-2);
+  }
+  .free .b-time {
+    color: var(--muted);
+  }
+
+  .library {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .lib-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 4px 10px;
+  }
+  .library ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .library li {
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 5px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+</style>

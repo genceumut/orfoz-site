@@ -1,26 +1,31 @@
 ---
-import { site, mailto } from '../config';
+// The accent-colored closing card with a single mailto link. Body copy goes in the slot.
+interface Props {
+  id?: string;
+  heading: string;
+  href: string;
+  label: string;
+}
+
+const { id = 'contact', heading, href, label } = Astro.props;
 ---
 
-<section id="contact" class="section" aria-labelledby="contact-title">
+<section id={id} class="section" aria-labelledby={`${id}-title`}>
   <div class="wrap">
-    <div class="card">
-      <div>
-        <h2 id="contact-title">Early access</h2>
-        <p>
-          {site.name} isn’t live yet. We’re talking to app developers and advertisers before launch. If you’d define a
-          schema for your app, or want your site turned into ads that fit, write to us.
-        </p>
+    <div class="contact-card">
+      <div class="body">
+        <h2 id={`${id}-title`}>{heading}</h2>
+        <slot />
       </div>
       <div class="action">
-        <a class="btn mail" href={mailto(`${site.name} early access`)}>Email {site.contactEmail}</a>
+        <a class="btn mail" href={href}>{label}</a>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .card {
+  .contact-card {
     background: var(--accent);
     color: var(--accent-ink);
     border-radius: 28px;
@@ -30,7 +35,7 @@ import { site, mailto } from '../config';
     align-items: center;
   }
   @media (min-width: 860px) {
-    .card {
+    .contact-card {
       grid-template-columns: 1.4fr 1fr;
       gap: 48px;
     }
@@ -41,7 +46,7 @@ import { site, mailto } from '../config';
   h2 {
     margin-bottom: 14px;
   }
-  p {
+  .body :global(p) {
     max-width: 52ch;
     opacity: 0.95;
   }

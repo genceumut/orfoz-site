@@ -1,0 +1,71 @@
+---
+// The "At a glance" summary card shown beside a hero.
+interface Props {
+  label: string;
+  items: { term: string; detail: string }[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<aside class="spec" aria-label={label}>
+  <p class="spec-title">At a glance</p>
+  <dl>
+    {
+      items.map((i) => (
+        <div>
+          <dt>{i.term}</dt>
+          <dd>{i.detail}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>
+
+<style>
+  .spec {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+  .spec-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  dl {
+    margin: 0;
+  }
+  dl div {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 16px;
+    padding-block: 14px;
+    border-top: 1px solid var(--line);
+  }
+  dl div:first-child {
+    border-top: 0;
+  }
+  dt {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+  dd {
+    margin: 0;
+    font-weight: 500;
+    font-size: 0.98rem;
+    line-height: 1.45;
+  }
+  @media (max-width: 420px) {
+    dl div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

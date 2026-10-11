@@ -1,13 +1,15 @@
 ---
 import '../styles/global.css';
-import { site } from '../config';
 
 interface Props {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
+  siteName: string;
+  url?: string;
+  noindex?: boolean;
 }
 
-const { title = `${site.name} — ${site.tagline}`, description = site.description } = Astro.props;
+const { title, description, siteName, url, noindex = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,12 +19,16 @@ const { title = `${site.name} — ${site.tagline}`, description = site.descripti
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {url && <link rel="canonical" href={url} />}
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f6f0e6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f1d1a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    {url && <meta property="og:url" content={url} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>

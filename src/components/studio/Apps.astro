@@ -1,0 +1,229 @@
+---
+// Renders the app list from src/data/apps.ts. Apps with a `mock` are featured with
+// a live mock; the rest are listed as smaller cards.
+import { apps, type AppMock, type StudioApp } from '../../data/apps';
+import YarunMock from './mocks/YarunMock.astro';
+import CayMock from './mocks/CayMock.astro';
+
+const mocks: Record<AppMock, typeof YarunMock> = { yarun: YarunMock, cay: CayMock };
+
+const featured = apps.filter((a) => a.mock);
+const others = apps.filter((a) => !a.mock);
+
+const meta = (a: StudioApp) => [
+  { term: 'Platform', detail: a.platform },
+  { term: 'Status', detail: a.status },
+  { term: 'Price', detail: a.price },
+];
+---
+
+<section id="apps" class="section apps" aria-labelledby="apps-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">The apps</p>
+        <h2 id="apps-title">What we’re making<span class="dot">.</span></h2>
+      </div>
+      <p class="lede">Nothing is released yet. Here’s what we’re working on, and what we’re thinking about next.</p>
+    </div>
+
+    <div class="featured">
+      {
+        featured.map((a) => {
+          const Mock = mocks[a.mock!];
+          return (
+            <article id={a.id} class="feature" aria-labelledby={`${a.id}-name`}>
+              <Mock appName={a.name} />
+              <div class="info">
+                <p class:list={['status', a.status === 'Idea' ? 'idea' : 'dev']}>{a.status}</p>
+                <h3 id={`${a.id}-name`}>{a.name}</h3>
+                {a.tagline && <p class="tagline">{a.tagline}</p>}
+                <p class="desc">{a.description}</p>
+                {a.points && (
+                  <ul class="points">
+                    {a.points.map((p) => (
+                      <li>{p}</li>
+                    ))}
+                  </ul>
+                )}
+                <dl class="meta">
+                  {meta(a).map((m) => (
+                    <div>
+                      <dt>{m.term}</dt>
+                      <dd>{m.detail}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    {
+      others.length > 0 && (
+        <div class="others">
+          <h3 class="others-title">Also on the list</h3>
+          <ul class="idea-grid">
+            {others.map((a) => (
+              <li id={a.id} class="idea-card">
+                <p class:list={['status', a.status === 'Idea' ? 'idea' : 'dev']}>{a.status}</p>
+                <h4>{a.name}</h4>
+                <p class="desc">{a.description}</p>
+                <dl class="meta">
+                  {meta(a)
+                    .filter((m) => m.term !== 'Status')
+                    .map((m) => (
+                      <div>
+                        <dt>{m.term}</dt>
+                        <dd>{m.detail}</dd>
+                      </div>
+                    ))}
+                </dl>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .apps {
+    background: var(--surface-2);
+  }
+
+  .featured {
+    display: grid;
+    gap: clamp(64px, 9vw, 112px);
+  }
+  .feature {
+    display: grid;
+    gap: 40px;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .feature {
+      grid-template-columns: minmax(0, 400px) 1fr;
+      gap: 80px;
+    }
+    .feature:nth-child(even) {
+      grid-template-columns: 1fr minmax(0, 400px);
+    }
+    .feature:nth-child(even) .info {
+      order: -1;
+    }
+  }
+
+  .status {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .status.dev {
+    background: var(--tint);
+    color: var(--ink);
+  }
+  .status.idea {
+    border: 1.5px dashed var(--line);
+    color: var(--ink-2);
+  }
+
+  .info h3 {
+    font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+  }
+  .tagline {
+    margin-top: 6px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--accent);
+  }
+  .desc {
+    margin-top: 14px;
+    color: var(--ink-2);
+    max-width: 52ch;
+  }
+  .points {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    max-width: 56ch;
+  }
+  .points li {
+    position: relative;
+    padding: 10px 0 10px 24px;
+    border-top: 1px solid var(--line);
+  }
+  .points li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 21px;
+    width: 10px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .meta {
+    margin: 22px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+  .meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .meta dd {
+    margin: 2px 0 0;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .others {
+    margin-top: clamp(72px, 10vw, 120px);
+  }
+  .others-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  .idea-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 20px;
+  }
+  @media (min-width: 760px) {
+    .idea-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .idea-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+  .idea-card h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+  .idea-card .desc {
+    margin-top: 8px;
+    font-size: 0.95rem;
+  }
+  .idea-card .meta {
+    margin-top: 16px;
+  }
+</style>

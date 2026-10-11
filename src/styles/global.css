@@ -24,6 +24,7 @@
   --band-ink: #f6f0e6;
   --band-muted: #b9cbc5;
   --band-card: #21483f;
+  --band-accent: #e58560; /* the accent, lightened for dark bands */
 
   --radius: 20px;
   --radius-sm: 12px;
@@ -48,6 +49,7 @@
     --band-ink: #efe8dc;
     --band-muted: #a5b8b2;
     --band-card: #142824;
+    --band-accent: #e58560;
   }
 }
 
@@ -241,4 +243,120 @@ pre {
 }
 .skip-link:focus {
   top: 12px;
+}
+
+/* ---------- Shared building blocks (used by both sites) ---------- */
+
+/* Hero */
+.hero {
+  padding-block: clamp(48px, 8vw, 112px) clamp(64px, 9vw, 120px);
+}
+.hero-grid {
+  display: grid;
+  gap: 56px;
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 72px;
+  }
+}
+.chip {
+  display: inline-block;
+  background: var(--tint);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+.hero .chip {
+  margin-bottom: 28px;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.hero-lede {
+  margin-top: 28px;
+  font-size: 1.15rem;
+  color: var(--ink-2);
+  max-width: 54ch;
+}
+.hero-callout {
+  margin-top: 20px;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
+  font-weight: 500;
+  max-width: 54ch;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+/* Dark band sections */
+.band {
+  background: var(--band);
+  color: var(--band-ink);
+}
+.band .lede,
+.band .eyebrow {
+  color: var(--band-muted);
+}
+.band .dot {
+  color: var(--band-accent);
+}
+
+/* Card grids */
+.card-grid {
+  display: grid;
+  gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 760px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .card-grid.cols-2,
+  .card-grid.cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1100px) {
+  .card-grid.cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.band-card {
+  background: var(--band-card);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.band-card h3 {
+  margin-bottom: 10px;
+}
+.band-card p {
+  color: var(--band-muted);
+}
+.card-grid.numbered {
+  counter-reset: card;
+}
+.card-grid.numbered > li {
+  counter-increment: card;
+}
+.card-grid.numbered > li::before {
+  content: counter(card, decimal-leading-zero);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--band-accent);
+  margin-bottom: 18px;
 }

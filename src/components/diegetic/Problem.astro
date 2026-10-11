@@ -1,0 +1,47 @@
+---
+import Band from '../Band.astro';
+
+const sides = [
+  {
+    who: 'For users',
+    text: 'The ad sits on top of the thing they opened the app to do. So they learn to look past it.',
+  },
+  {
+    who: 'For app developers',
+    text: 'A foreign rectangle in a screen they designed carefully, earning on views nobody wanted.',
+  },
+  {
+    who: 'For advertisers',
+    text: 'One creative stretched across every app, paid per impression, mostly ignored.',
+  },
+];
+---
+
+<Band labelledby="problem-title">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">The problem</p>
+      <h2 id="problem-title">One banner, pasted everywhere<span class="dot">.</span></h2>
+    </div>
+    <p class="lede">
+      Most in-app ads are the same unit dropped into every app, whatever the app does. A planner, a recipe app and a
+      game all get the same rectangle.
+    </p>
+  </div>
+  <ul class="card-grid">
+    {
+      sides.map((s) => (
+        <li class="band-card">
+          <h3>{s.who}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Band>
+
+<style>
+  .band-card p {
+    font-size: 0.98rem;
+  }
+</style>

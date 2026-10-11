@@ -1,0 +1,54 @@
+---
+import Band from '../Band.astro';
+import { apps } from '../../data/apps';
+
+// The data commitment uses Çay as its example, if Çay is still on the list.
+const cay = apps.find((a) => a.id === 'cay');
+
+const commitments = [
+  {
+    title: 'One app, one job.',
+    text: 'Each app does one everyday job. A feature that doesn’t serve that job doesn’t go in.',
+  },
+  {
+    title: 'Fair pricing.',
+    text: 'Free or a one-time price. If an app costs us nothing to run each month, it won’t cost you anything each month. No trick trials, no dark patterns.',
+  },
+  {
+    title: 'Light.',
+    text: 'Small to download, quick to open, and working offline wherever the job allows.',
+  },
+  {
+    title: 'Your data stays yours.',
+    text:
+      'We don’t sell what you put into an app or share it with anyone you didn’t choose.' +
+      (cay ? ` ${cay.name}, for example, is fully personal: nothing in it is shared with anyone.` : ''),
+  },
+];
+---
+
+<Band id="how" labelledby="how-title">
+  <div class="section-head">
+    <div>
+      <p class="eyebrow">How we build</p>
+      <h2 id="how-title">Four commitments<span class="dot">.</span></h2>
+    </div>
+    <p class="lede">We hold every app to these. If an idea can’t meet them, we don’t build it.</p>
+  </div>
+  <ol class="card-grid cols-4 numbered">
+    {
+      commitments.map((c) => (
+        <li class="band-card">
+          <h3>{c.title}</h3>
+          <p>{c.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Band>
+
+<style>
+  .band-card p {
+    font-size: 0.98rem;
+  }
+</style>

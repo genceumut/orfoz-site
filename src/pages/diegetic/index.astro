@@ -1,0 +1,43 @@
+---
+// Private section: served only behind HTTP Basic Auth (see worker/index.ts).
+// Never link here from the studio site.
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Hero from '../../components/diegetic/Hero.astro';
+import Problem from '../../components/diegetic/Problem.astro';
+import HowItWorks from '../../components/diegetic/HowItWorks.astro';
+import PlannerExample from '../../components/diegetic/PlannerExample.astro';
+import Tracks from '../../components/diegetic/Tracks.astro';
+import Principles from '../../components/diegetic/Principles.astro';
+import Contact from '../../components/diegetic/Contact.astro';
+import { brand, mailto } from '../../config/diegetic';
+---
+
+<Base title={`${brand.name} — ${brand.tagline}`} description={brand.description} siteName={brand.name} noindex>
+  <Header
+    name={brand.name}
+    home={brand.home}
+    nav={[
+      { href: '#how', label: 'How it works' },
+      { href: '#example', label: 'Example' },
+      { href: '#principles', label: 'Principles' },
+    ]}
+    cta={{ href: mailto(`${brand.name} early access`), label: 'Early access' }}
+  />
+  <main id="main">
+    <Hero />
+    <Problem />
+    <HowItWorks />
+    <PlannerExample />
+    <Tracks />
+    <Principles />
+    <Contact />
+  </main>
+  <Footer
+    name={brand.name}
+    line={`${brand.tagline.toLowerCase()} · pre-launch`}
+    note="All brands and apps shown in examples on this page are invented."
+    year={brand.year}
+  />
+</Base>

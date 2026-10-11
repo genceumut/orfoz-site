@@ -1,0 +1,31 @@
+---
+import SpecCard from '../SpecCard.astro';
+import { brand } from '../../config/studio';
+
+const glance = [
+  { term: 'Studio', detail: 'Small and independent, in İstanbul' },
+  { term: 'Apps', detail: 'One everyday job each' },
+  { term: 'Pricing', detail: 'Free or a one-time price' },
+  { term: 'Subscriptions', detail: 'Only if an app costs us money every month' },
+  { term: 'Status', detail: 'First apps in development' },
+];
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="chip">A small app studio from İstanbul</p>
+      <h1 id="hero-title">Small apps.<br /> Fair prices.<br /> <em>One job each.</em></h1>
+      <p class="hero-lede">
+        {brand.name} is a small, independent mobile app studio in İstanbul. We make cheap, useful apps for everyday
+        jobs: free or a one-time purchase, small to download, no feature bloat.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#apps">See the apps</a>
+        <a class="btn btn-ghost" href="#how">How we build</a>
+      </div>
+    </div>
+
+    <SpecCard label={`${brand.name} at a glance`} items={glance} />
+  </div>
+</section>
